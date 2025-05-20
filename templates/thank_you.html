@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gracias por tu respuesta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #3949AB;
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
+        }
+        .card-body {
+            padding: 30px;
+            text-align: center;
+        }
+        .confirmed {
+            color: #4CAF50;
+        }
+        .declined {
+            color: #F44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Respuesta Registrada</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    {% if response == 'confirmed' %}
+                        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Confirmed" width="80">
+                    {% else %}
+                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Declined" width="80">
+                    {% endif %}
+                </div>
+                
+                <h4 class="mb-4">¡Gracias por tu respuesta!</h4>
+                
+                {% if response == 'confirmed' %}
+                    <p class="confirmed">Has <strong>confirmado</strong> tu asistencia al evento:</p>
+                {% else %}
+                    <p class="declined">Has <strong>declinado</strong> tu asistencia al evento:</p>
+                {% endif %}
+                
+                <h5 class="mb-4">{{ event_name }}</h5>
+                
+                <p>Tu respuesta ha sido registrada correctamente.</p>
+                
+                <div class="mt-4">
+                    <p class="text-muted">
+                        Puedes cerrar esta ventana.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

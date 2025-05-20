@@ -1,51 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <title>Confirmar asistencia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Asistencia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 600px;
             margin-top: 50px;
-            background: #f0f4f8;
         }
-        h2 {
-            color: #333;
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        form button {
-            font-size: 1.5rem;
-            padding: 15px 30px;
-            margin: 20px 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        button#si {
-            background-color: #28a745;
+        .card-header {
+            background-color: #3949AB;
             color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
         }
-        button#si:hover {
-            background-color: #218838;
+        .card-body {
+            padding: 30px;
         }
-        button#no {
-            background-color: #dc3545;
-            color: white;
+        .btn-confirm {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
         }
-        button#no:hover {
-            background-color: #c82333;
+        .btn-decline {
+            background-color: #F44336;
+            border-color: #F44336;
+            width: 100%;
+            padding: 12px;
+        }
+        .event-details {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h2>¿Confirmas tu asistencia al evento?</h2>
-    <form method="post" action="/respuesta">
-        <input type="hidden" name="evento_id" value="{{ evento_id }}" />
-        <input type="hidden" name="contacto" value="{{ contacto }}" />
-        <button type="submit" id="si" name="respuesta" value="si">✅ Sí</button>
-        <button type="submit" id="no" name="respuesta" value="no">❌ No</button>
-    </form>
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Confirmación de Asistencia</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2107/2107957.png" alt="Calendar Icon" width="80">
+                </div>
+                
+                <h4 class="text-center mb-3">¡Hola, {{ participant_name }}!</h4>
+                <p class="text-center">Has sido invitado al siguiente evento:</p>
+                
+                <div class="event-details">
+                    <h5 class="text-center">{{ event_name }}</h5>
+                    <div class="row mt-3">
+                        <div class="col-6 text-center">
+                            <strong>Fecha:</strong><br>
+                            {{ event_date }}
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong>Hora:</strong><br>
+                            {{ event_time }}
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-center mb-4">¿Confirmas tu asistencia a este evento?</p>
+                
+                <form action="{{ url_for('confirm_response', token=invitation['token']) }}" method="post">
+                    <div class="d-grid gap-2">
+                        <button type="submit" name="response" value="confirmed" class="btn btn-success btn-confirm">
+                            Sí, confirmo mi asistencia
+                        </button>
+                        <button type="submit" name="response" value="declined" class="btn btn-danger btn-decline">
+                            No podré asistir
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
