@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Confirmar asistencia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background: #f0f4f8;
+        }
+        h2 {
+            color: #333;
+        }
+        form button {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            margin: 20px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button#si {
+            background-color: #28a745;
+            color: white;
+        }
+        button#si:hover {
+            background-color: #218838;
+        }
+        button#no {
+            background-color: #dc3545;
+            color: white;
+        }
+        button#no:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h2>¿Confirmas tu asistencia al evento?</h2>
+    <form method="post" action="/respuesta">
+        <input type="hidden" name="evento_id" value="{{ evento_id }}" />
+        <input type="hidden" name="contacto" value="{{ contacto }}" />
+        <button type="submit" id="si" name="respuesta" value="si">✅ Sí</button>
+        <button type="submit" id="no" name="respuesta" value="no">❌ No</button>
+    </form>
+</body>
+</html>
