@@ -17,57 +17,73 @@
         .card {
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none;
         }
         .card-header {
-            background-color: #3949AB;
+            background-color: #4CAF50;
             color: white;
             border-radius: 15px 15px 0 0 !important;
             padding: 20px;
+        }
+        .card-header.declined {
+            background-color: #F44336;
         }
         .card-body {
             padding: 30px;
             text-align: center;
         }
-        .confirmed {
-            color: #4CAF50;
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
         }
-        .declined {
-            color: #F44336;
+        .success-icon.declined {
+            background-color: #F44336;
+        }
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <div class="card-header text-center">
+            <div class="card-header text-center {% if response == 'declined' %}declined{% endif %}">
                 <h2>Respuesta Registrada</h2>
             </div>
             <div class="card-body">
-                <div class="text-center mb-4">
+                <div class="success-icon {% if response == 'declined' %}declined{% endif %}">
                     {% if response == 'confirmed' %}
-                        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Confirmed" width="80">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
+                    </svg>
                     {% else %}
-                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Declined" width="80">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="white"/>
+                    </svg>
                     {% endif %}
                 </div>
                 
-                <h4 class="mb-4">¡Gracias por tu respuesta!</h4>
+                <h4>¡Gracias por tu respuesta!</h4>
                 
                 {% if response == 'confirmed' %}
-                    <p class="confirmed">Has <strong>confirmado</strong> tu asistencia al evento:</p>
+                <p>Has confirmado tu asistencia al evento <strong>{{ event_name }}</strong>.</p>
+                <p>Te esperamos. ¡No faltes!</p>
                 {% else %}
-                    <p class="declined">Has <strong>declinado</strong> tu asistencia al evento:</p>
+                <p>Has indicado que no podrás asistir al evento <strong>{{ event_name }}</strong>.</p>
+                <p>Lamentamos que no puedas acompañarnos. ¡Esperamos verte en el próximo evento!</p>
                 {% endif %}
                 
-                <h5 class="mb-4">{{ event_name }}</h5>
-                
-                <p>Tu respuesta ha sido registrada correctamente.</p>
-                
-                <div class="mt-4">
-                    <p class="text-muted">
-                        Puedes cerrar esta ventana.
-                    </p>
-                </div>
+                <p class="mt-4">Esta ventana puede ser cerrada.</p>
             </div>
         </div>
     </div>

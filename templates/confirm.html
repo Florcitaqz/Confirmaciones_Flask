@@ -78,7 +78,7 @@
                 
                 <p class="text-center mb-4">¿Confirmas tu asistencia a este evento?</p>
                 
-                <form action="{{ url_for('confirm_response', token=invitation['token']) }}" method="post">
+                <form action="/confirm/{{ token }}/response" method="post">
                     <div class="d-grid gap-2">
                         <button type="submit" name="response" value="confirmed" class="btn btn-success btn-confirm">
                             Sí, confirmo mi asistencia

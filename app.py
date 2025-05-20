@@ -40,12 +40,19 @@ def confirm_page(token):
         
         logger.debug(f"Invitación encontrada: {invitation}")
         
+        # Asegurarse de que todos los campos necesarios estén presentes
+        event_name = invitation.get('event_name', 'Evento')
+        event_date = invitation.get('event_date', 'Fecha no especificada')
+        event_time = invitation.get('event_time', 'Hora no especificada')
+        participant_name = invitation.get('participant_name', 'Invitado')
+        
         return render_template('confirm.html', 
                               invitation=invitation, 
-                              event_name=invitation['event_name'],
-                              event_date=invitation['event_date'],
-                              event_time=invitation['event_time'],
-                              participant_name=invitation['participant_name'])
+                              event_name=event_name,
+                              event_date=event_date,
+                              event_time=event_time,
+                              participant_name=participant_name,
+                              token=token)  # Asegurarse de pasar el token
     except Exception as e:
         logger.error(f"Error en confirm_page: {str(e)}", exc_info=True)
         return render_template('error.html', message=f"Error del servidor: {str(e)}")
@@ -93,7 +100,7 @@ def confirm_response(token):
         
         return render_template('thank_you.html', 
                               response=response, 
-                              event_name=invitation['event_name'])
+                              event_name=invitation.get('event_name', 'Evento'))
     except Exception as e:
         logger.error(f"Error en confirm_response: {str(e)}", exc_info=True)
         return render_template('error.html', message=f"Error del servidor: {str(e)}")
@@ -217,6 +224,21 @@ def debug_db_info():
 def debug_test():
     """Página de prueba para verificar que el servidor está funcionando"""
     return "El servidor está funcionando correctamente"
+
+@app.route('/debug/templates')
+def debug_templates():
+    """Listar todas las plantillas disponibles"""
+    try:
+        template_dir = os.path.join(app.root_path, 'templates')
+        templates = os.listdir(template_dir)
+        return jsonify({
+            'template_dir': template_dir,
+            'templates': templates,
+            'exists': os.path.exists(template_dir)
+        })
+    except Exception as e:
+        logger.error(f"Error en debug_templates: {str(e)}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
